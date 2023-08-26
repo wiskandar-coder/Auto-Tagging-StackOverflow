@@ -1,38 +1,24 @@
-# Automatic categorization of questions
-The project consists of creating an auto-tagging system for StackOverflow users by automatically suggest tags from the title and the body of the user question. We will test multiple machine learning techniques and train them on more than 100k SO questions.
+# Automatic Categorization of Questions
+The project is to automatically suggest tags for SlackOverflow users from the title and the body of their questions. For that, I will be testing multiple supervised and unsupervised machine learning technique and train them on more than 100k SO questions..
 
-The project is divided into four sections:
-~~~
-1- First is the cleaning of the data.
-    I started by importing the data from Brazilian E-Commerce Public Dataset by Olist hosted at kaggle website https://www.kaggle.com/olistbr/brazilian-ecommerce. The Data Schema, and the definition of the variables can be found there as well.
-    Then, I cleaned the data by:
-    - removing not delivered purchases and purchase with missing payed amount
-    - removing purchase identified as outlier in terms of payed amount, number of products purchased
-    - removing customers identified as outlier in terms of number of purchases made
-2- Second we do feature engineering by creating:
-    - Recency (time since last order), frequency (number of purchase), and monetary (mean amount payed per purchase) for each customer
-    - Delivery Time related to the mean time between the purchase date and the delivery date
-    - Review Score related to the mean review score left by the customer
-3- Third we analyse the selected features:
-    - univariate analysis of each feature
-    - bivariate analysis to check for correlation between the features
-    - multivariate analysis using t-SNE for three different set/combination of features
-        - standardizing the data
-        - t-SNE on RFM features
-        - t-SNE on RFM features with review score
-        - t-SNE on RFM features with review score and delivery time
-4- Fourth, clustering of the customers for three different set/combination of features using unsupervised machine learning technique:
-    - standardizing the data
-    - usage of unsupervised machine learning models (K-means, DBScan, or AgglomerativeHierarchicalClustering)
-    - optimizing of the models parameters using silhouette coefficient, elbow curve (for K-means), Davies Bouldin score, NearestNeighbors (for DBScan), and dendrogram (for AgglomerativeHierarchicalClustering) in order to select the optimal number of clusters (for K-means and AgglomerativeHierarchicalClustering), and eps score and min_smaples (for DBScan)
-    - do the procedure three times using three different set/combination of features:
-        - RFM features
-        - RFM features with review score
-        - RFM features with review score and delivery time
-5- Fifth, performing temporal stability of the clustering using the Adjusted Rand Score in order to give an estimate of updating time for the remodelisation
-~~~
+![image](https://github.com/wiskandar-coder/Auto-Tagging-StackOverflow/assets/64427335/cb1625a1-58b5-4a91-af3c-a65d57fd4b73)
 
-The first, second, third, and fourth points are covered in the notebook 'Exploration_notebook'.\
-The fourth point is covered in the notebook 'Tesing_notebook'.\
-The fifth point is covered in the notebook 'Simulation_notebook'.\
+- Exploration in 'Exploration_notebook'
+  - I will start with the treatment of questions and tags according to these steps:
+    - I will be extracting first questions from SlackOverflow, performing cleaning on the questions by removing links, English contractions, adverbs, and float numbers in title and body of the questions.
+    - Then, I will tokenize the words in title and body of the questions, removing stop words, adjective and adverbs, and finally normalize using lemmatizer or stemmer.
+    - Third, I will select the tags that appeared in at least 30 questions and keep all questions with at least 5 tags.
+    - Fourth, I will select the words in title-body of the questions that appeared in at least 30 questions and keep all title-body questions that have at least 10 words.
+    - Fifth, I will create bigram and trigram in the title-body of the questions.
+  - I will analyse the words frequency in title and body of the questions, the tags frequency, the words number of the questions, and perform dimension reduction to show the distribution of questions in 2D.
+  - Finally, I will extract the data for the modelisation.
+  
+- Modelisation in 'Testing_notebook'
+  - I will start testing some supervised learning approach to extract feature using count vectorizer, and TF-IDF, then switch to Word2Vec, BERT, and USE. I will use multiple machine learning algorithm like RansomForest, KNN, LogisticRegression, MultinomialNB, and SGDClassifier to predict tags and then compare with the true tags in the question.
+  - Second, I will use unsupervided learning approach to extract feature using LDA combined with count-vectorizer and NMF combined with TF-IDF.
+  - Finally I will select the best modelisation approach for the next API step
+
+- Application in https://github.com/wiskandar-coder/Auto-Tagging-Stackoverflow-API
+  - An app will serve as a test where the user enter the title and the body of the questions, and the application will suggest tags for the user.
+
 A powerpoint presentation of the project can be shared under request.
