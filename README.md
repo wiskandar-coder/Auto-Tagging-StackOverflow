@@ -20,5 +20,6 @@ The project is to automatically suggest tags for SlackOverflow users from the ti
 
 - Application in https://github.com/wiskandar-coder/Auto-Tagging-Stackoverflow-API
   - An app will serve as a test where the user enter the title and the body of the questions, and the application will suggest tags for the user.
+  - The application is deployed in HEROKU; the link to the app and API: https://auto-tagging-stackoverflow.herokuapp.com/
 
 A powerpoint presentation of the project can be shared under request.
